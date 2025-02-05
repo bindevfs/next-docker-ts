@@ -1,10 +1,6 @@
-import {PropsWithChildren} from "react";
+import { PropsWithChildren } from 'react';
 
 const MobileLayout = ({ children }: PropsWithChildren) => {
-    return (
-        <div>
-            {children}
-        </div>
-    )
+  return <div>{children}</div>;
 };
 export default MobileLayout;
