@@ -3,7 +3,6 @@ import {Button} from "@/components/ui/Button/BaseButton";
 import useModal from "@/components/Modal/useModal";
 
 const Common = ({ id, onDismiss } ) => {
-    console.log(id)
     return (
         <div className="overflow-hidden bg-neutral-50 border border-neutral-300 w-full min-h-[320px]">
             <div className="p-3">

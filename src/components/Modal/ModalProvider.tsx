@@ -1,8 +1,6 @@
 'use client';
 
 import React, { createContext, useCallback, useMemo, useState } from 'react';
-import { createPortal } from 'react-dom';
-import getPortalRoot from '@/utils/getPortalRoot';
 import { Dialog, DialogContent } from "@/components/ui/Dialog";
 
 interface ModalContext {
@@ -23,12 +21,12 @@ export const Context = createContext<ModalContext>({
     onPresent: () => null,
 });
 
-const ModalProvider: React.FC<React.PropsWithChildren<{ portalProvider?: React.FC<React.PropsWithChildren> }>> = ({
-                                                                                                                      children,
-                                                                                                                      portalProvider: NestProvider = React.Fragment,
-                                                                                                                  }) => {
+const ModalProvider = ({
+                           children,
+                           portalProvider: NestProvider = React.Fragment,
+                       }: React.PropsWithChildren<{ portalProvider?: React.ComponentType<React.PropsWithChildren> }>) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [modalNode, setModalNode] = useState<React.ReactNode | undefined>();
+    const [modalNode, setModalNode] = useState<React.ReactNode>();
     const [nodeId, setNodeId] = useState('');
     const [closeOnOverlayClick, setCloseOnOverlayClick] = useState(true);
 
@@ -47,9 +45,7 @@ const ModalProvider: React.FC<React.PropsWithChildren<{ portalProvider?: React.F
     }, []);
 
     const handleOverlayDismiss = useCallback(() => {
-        if (closeOnOverlayClick) {
-            handleDismiss();
-        }
+        closeOnOverlayClick && handleDismiss();
     }, [closeOnOverlayClick, handleDismiss]);
 
     const providerValue = useMemo(
@@ -63,11 +59,15 @@ const ModalProvider: React.FC<React.PropsWithChildren<{ portalProvider?: React.F
         }),
         [isOpen, nodeId, modalNode, handlePresent, handleDismiss]
     );
+
     return (
         <Context.Provider value={providerValue}>
             <NestProvider>
                 <Dialog open={isOpen}>
-                    <DialogContent onEscapeKeyDown={handleOverlayDismiss} onPointerDownOutside={handleOverlayDismiss}>
+                    <DialogContent
+                        onEscapeKeyDown={handleOverlayDismiss}
+                        onPointerDownOutside={handleOverlayDismiss}
+                    >
                         {React.isValidElement(modalNode) &&
                             React.cloneElement(modalNode, {
                                 onDismiss: handleDismiss,
