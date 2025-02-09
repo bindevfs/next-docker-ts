@@ -1,8 +1,11 @@
 'use client';
 import { PropsWithChildren } from 'react';
 import Header from '@/app/(main)/_layout/Desktop/Header';
+import Link from 'next/link';
+import {usePathname} from "next/navigation";
 
-const DesktopLayout = ({ children }: PropsWithChildren) => {
+const DesktopLayout = ({ auth, children }: PropsWithChildren) => {
+    const pathname = usePathname();
   return (
     <section className="grid min-h-screen grid-rows-[auto,1fr,auto] md:grid-cols-[300px,1fr] md:grid-rows-[auto,1fr,auto]">
       <div className="col-span-full row-span-1 md:col-span-2">
@@ -12,9 +15,9 @@ const DesktopLayout = ({ children }: PropsWithChildren) => {
         <nav>
           <ul>
             <li>
-              <a href="#" className="block py-2">
-                Link 1
-              </a>
+              <Link href={`/login?callback=${pathname}`} className="block py-2">
+                Open modal
+              </Link>
             </li>
             <li>
               <a href="#" className="block py-2">
@@ -29,7 +32,10 @@ const DesktopLayout = ({ children }: PropsWithChildren) => {
           </ul>
         </nav>
       </aside>
-      <main className="col-span-full row-span-1 bg-white p-4 md:col-span-1">{children}</main>
+      <main className="col-span-full row-span-1 bg-white p-4 md:col-span-1">
+          {auth}
+          {children}
+      </main>
       <footer className="col-span-full row-span-1 bg-gray-800 p-4 text-white md:col-span-2">
         <p>Footer</p>
       </footer>

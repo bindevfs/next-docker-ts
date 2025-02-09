@@ -65,7 +65,7 @@ const ModalProvider = ({
     }),
     [isOpen, nodeId, modalNode, handlePresent, handleDismiss],
   );
-  console.log(isOpen, modalNode);
+
   return (
     <Context.Provider value={providerValue}>
       <NestProvider>
