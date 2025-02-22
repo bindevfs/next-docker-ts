@@ -3,7 +3,6 @@ import localFont from 'next/font/local';
 import './globals.css';
 import ModalProvider from '@/components/Modal/ModalProvider';
 import { MatchBreakpointsProvider } from '@/layout/MatchBreakpointsProvider/Provider';
-import Link from "next/link";
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -23,9 +22,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-    auth,
+  auth,
 }: Readonly<{
   children: React.ReactNode;
+  auth: any;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
